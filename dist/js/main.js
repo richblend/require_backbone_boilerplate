@@ -1,9 +1,1 @@
-/* Bootstrap the app once DOM is ready */
-
-require(['app'], function(App){
-	
-	$().ready(function(){
-		App.init();
-	});
-
-});
+define("router",[],function(){var e=function(){var e=Backbone.Router.extend({routes:{1:"view1",2:"view2"}}),t=new e;t.on("route:view1",function(){require(["views/view1"],function(e){var t=new e;$(".container").html(t.$el)})}),t.on("route:view2",function(){require(["views/view2"],function(e){var t=new View2})}),Backbone.history.start()};return{init:e}}),define("mediator",[],function(){var e={},t=function(t,n){e.hasOwnProperty(n)||(e[n]=[]),e[n].push(t)},n=function(t){var n=e[t];for(var r=0;r<n.length;r++)n[r]()};return{subscribe:t,publish:n}}),define("app",["router","mediator"],function(e,t){var n=function(){e.init(),t.subscribe(r,"global/showAlert")},r=function(){console.log("Here is an alert")};return{init:n,showAlert:r}}),require.config({urlArgs:window.requireCacheBust}),require(["app"],function(e){$().ready(function(){e.init()})}),define("main",function(){});

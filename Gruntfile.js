@@ -107,20 +107,34 @@ module.exports = function(grunt) {
 		},
 
 		'string-replace': {
-			dist: {
+			build: {
 				files: {
 					'dist/index.html': 'src/index.html'
 				},
 				options: {
 					replacements: [
 						{
-							pattern: /%timestamp%/g,
+							pattern: /%cachebust%/g,
+							replacement: '<%= pkg.version %>'
+						}
+					]
+				}
+			},
+			run: {
+				files: {
+					'dist/index.html': 'src/index.html'
+				},
+				options: {
+					replacements: [
+						{
+							pattern: /%cachebust%/g,
 							replacement: new Date().getTime()
 						}
 					]
 				}
 			}
 		},
+
 
 		sass: {
 			dev: {
@@ -171,7 +185,7 @@ module.exports = function(grunt) {
 			},
 			html: {
 				files: ['src/*.html'],
-				tasks: ['string-replace']
+				tasks: ['string-replace:run']
 			}
 		},
 
@@ -226,7 +240,7 @@ module.exports = function(grunt) {
 		//uglify other files (that also need minification) to dist
 		'uglify',
 		//copy index.html to dist while doing some str replaces on it
-		'string-replace',
+		'string-replace:build',
 		//compile sass
 		'sass',
 		//add vendor prefixes to compiled css files
@@ -246,7 +260,7 @@ module.exports = function(grunt) {
 		//concatenate other vendor files into one file and copy that to dist
 		'copy:run',
 		//copy index.html to dist while doing some str replaces on it
-		'string-replace',
+		'string-replace:run',
 		//compile sass
 		'sass',
 		//add vendor prefixes to compiled css files

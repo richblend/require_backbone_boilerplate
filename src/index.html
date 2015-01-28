@@ -11,8 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
        
-        <link rel="stylesheet" href="css/main.css?%timestamp%">
-        <script src="js/vendor/modernizr.js?%timestamp%"></script>
+        <link rel="stylesheet" href="css/main.css?v=%cachebust%">
+        <script src="js/vendor/modernizr.js"></script>
     </head>
     <body>
         
@@ -20,14 +20,13 @@
         
         <div class="container"></div>
 
-        
-        <script src="js/vendor/vendor.js?%timestamp%"></script>
-        <script data-main="js/main.js" src="js/vendor/require.js?%timestamp%"></script>
+        <script> var requireCacheBust = '%cachebust%'; </script>
+        <script src="js/vendor/vendor.js?v=%cachebust%"></script>
+        <script data-main="js/main.js?v=%cachebust%" src="js/vendor/require.js?v=%cachebust%"></script>
 
         
 
         <!-- templates -->
-        asd
         <script type="template/text" id="template-view1">
             <h1>View 1</h1>
         </script>
