@@ -1,0 +1,1 @@
+Boilerplate for a new SPA using Require, Backbone and HTML5 Boilerplate.
