@@ -181,7 +181,7 @@ module.exports = function(grunt) {
 			},
 			scripts: {
 				files: ['src/js/**/*.js'],
-				tasks: ['clean', 'requirejs', 'concat', 'copy:run', ],
+				tasks: ['clean', 'concat', 'copy:run', ],
 			},
 			html: {
 				files: ['src/*.html'],
@@ -255,7 +255,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('run', [
 		//clean tmp + dist/js directories
 		'clean', 
-		//copy all AMD modules into dist 
+		//concatenate other vendor files (probably mostly from bower_components) into one file and copy that to tmp
 		'concat', 
 		//concatenate other vendor files into one file and copy that to dist
 		'copy:run',
