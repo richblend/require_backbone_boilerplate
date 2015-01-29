@@ -1,7 +1,8 @@
 define([
 	'router',
-	'mediator'
-], function(router, mediator){
+	'mediator',
+	'modules/module1'
+], function(router, mediator, module1){
 
 	
 

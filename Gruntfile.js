@@ -81,6 +81,13 @@ module.exports = function(grunt) {
 					/* copy concatenated (but not uglified) vendor files */
 					{src: 'tmp/js/vendor/vendor.js', dest: 'dist/js/vendor/vendor.js'}
 				]
+			},
+
+			requireComponents: {
+				files: [
+					/* copy require components into src, so that require optimizer can compile everything from src */
+					{src: 'bower_components/requirejs-text/text.js', dest: 'src/js/components/text.js'},
+				]
 			}
 			
 		},
@@ -92,7 +99,8 @@ module.exports = function(grunt) {
 		         	appDir: "src/js/",
 		         	baseUrl: ".",
 		         	dir: "tmp/js",
-		         	modules: [{name: 'main'}]
+		         	modules: [{name: 'main'}],
+		         	mainConfigFile: "src/js/config.js"
 		          
 		        }
 		  	}
@@ -231,6 +239,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		//clean tmp + dist/js directories
 		'clean', 
+		//copy any require.js plugins into src directory, so we can then optimise them with require optimiser
+		'copy:requireComponents',
 		//run the require optimiser (which copies the optimised module files into tmp)
 		'requirejs', 
 		//concatenate other vendor files (probably mostly from bower_components) into one file and copy that to tmp
@@ -255,6 +265,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('run', [
 		//clean tmp + dist/js directories
 		'clean', 
+		//copy any require.js plugins into src directory, so we can then optimise them with require optimiser
+		'copy:requireComponents',
 		//concatenate other vendor files (probably mostly from bower_components) into one file and copy that to tmp
 		'concat', 
 		//concatenate other vendor files into one file and copy that to dist
