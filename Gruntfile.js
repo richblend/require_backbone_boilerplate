@@ -180,7 +180,7 @@ module.exports = function(grunt) {
 				tasks: ['sass', 'autoprefixer'],
 			},
 			scripts: {
-				files: ['src/js/*.js'],
+				files: ['src/js/**/*.js'],
 				tasks: ['clean', 'requirejs', 'concat', 'copy:run', ],
 			},
 			html: {
@@ -239,7 +239,7 @@ module.exports = function(grunt) {
 		'copy:build', 
 		//uglify other files (that also need minification) to dist
 		'uglify',
-		//copy index.html to dist while doing some str replaces on it
+		//copy index.html to dist while doing some str replaces on it.
 		'string-replace:build',
 		//compile sass
 		'sass',

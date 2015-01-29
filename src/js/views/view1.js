@@ -1,6 +1,7 @@
 define([
-	'mediator'
-], function(mediator){
+	'mediator',
+	'collections/burritos'
+], function(mediator, burritoCollection){
 
 	var View1 = Backbone.View.extend({
 		
@@ -10,15 +11,19 @@ define([
 			
 			this.render();
 
+			var bur = new burritoCollection();
+			console.log(bur);
+
 			//just for lolz
 			mediator.publish('global/showAlert');
 		},
 
 		render: function(){
-			console.log(this.template());
 			this.$el.html( this.template() );
 		}
 	});
+
+
 
 
 	return View1;
