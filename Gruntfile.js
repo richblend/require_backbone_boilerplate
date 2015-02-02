@@ -43,10 +43,10 @@ module.exports = function(grunt) {
 			/* Build any vendor scrips we feel appropriate into one file vendor.js. Order is specified */
 			vendor: {
 				src: [
-	
-					'bower_components/jquery/dist/jquery.js',
-					'bower_components/underscore/underscore.js',
-					'bower_components/backbone/backbone.js'
+					//following 3 vendor scripts are now imported correctly as AMD modules, not included in global vendor.js file
+					//'bower_components/jquery/dist/jquery.js',
+					//'bower_components/underscore/underscore.js',
+					//'bower_components/backbone/backbone.js'
 				],
 				dest: 'tmp/js/vendor/vendor.js'
 			}
@@ -81,13 +81,6 @@ module.exports = function(grunt) {
 					/* copy concatenated (but not uglified) vendor files */
 					{src: 'tmp/js/vendor/vendor.js', dest: 'dist/js/vendor/vendor.js'}
 				]
-			},
-
-			requireComponents: {
-				files: [
-					/* copy require components into src, so that require optimizer can compile everything from src */
-					{src: 'bower_components/requirejs-text/text.js', dest: 'src/js/components/text.js'},
-				]
 			}
 			
 		},
@@ -100,7 +93,7 @@ module.exports = function(grunt) {
 		         	baseUrl: ".",
 		         	dir: "tmp/js",
 		         	modules: [{name: 'main'}],
-		         	mainConfigFile: "src/js/config.js"
+		         	mainConfigFile: "src/js/main.js"
 		          
 		        }
 		  	}
@@ -200,13 +193,21 @@ module.exports = function(grunt) {
 
 		connect: {
 		    server: {
-		      options: {
-		        keepalive: true,
-		        port: 9001,
-		        base: 'dist'
-		      }
+				options: {
+					keepalive: true,
+					port: 9001,
+					base: 'dist',
+					middleware: function(connect) {
+					    return [
+					      
+							connect().use('/bower_components', connect.static('./bower_components')),
+							connect.static('dist')
+					      
+					    ];
+					}
+				}
 		    }
-		  }
+		}
 
 
 	});
@@ -239,8 +240,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		//clean tmp + dist/js directories
 		'clean', 
-		//copy any require.js plugins into src directory, so we can then optimise them with require optimiser
-		'copy:requireComponents',
 		//run the require optimiser (which copies the optimised module files into tmp)
 		'requirejs', 
 		//concatenate other vendor files (probably mostly from bower_components) into one file and copy that to tmp
@@ -265,8 +264,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('run', [
 		//clean tmp + dist/js directories
 		'clean', 
-		//copy any require.js plugins into src directory, so we can then optimise them with require optimiser
-		'copy:requireComponents',
 		//concatenate other vendor files (probably mostly from bower_components) into one file and copy that to tmp
 		'concat', 
 		//concatenate other vendor files into one file and copy that to dist

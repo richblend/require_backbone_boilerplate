@@ -1,31 +1,41 @@
-define([
-	'mediator',
-	'collections/burritos'
-], function(mediator, burritoCollection){
+define(
+	[
+		'jquery',
+		'underscore',
+		'backbone',
+		'mediator',
+		'collections/burritos',
+		'text!templates/module1.html',
+	], 
 
-	var View1 = Backbone.View.extend({
-		
-		template: _.template( $('#template-view1').html() ),
+	function($, _, Backbone, mediator, burritoCollection, html){
 
-		initialize: function(){
+		var View1 = Backbone.View.extend({
 			
-			this.render();
+			template: _.template( html ),
 
-			var bur = new burritoCollection();
-			console.log(bur);
+			initialize: function(){
+				
+				this.render();
 
-			//just for lolz
-			mediator.publish('global/showAlert');
-		},
+				var bur = new burritoCollection();
+				console.log(bur);
 
-		render: function(){
-			this.$el.html( this.template() );
-		}
-	});
+				//just for lolz
+				mediator.publish('global/showAlert');
+			},
 
+			render: function(){
+				this.$el.html( this.template() );
+			},
 
+			addSubView: function(viewName){
+				console.log('subview, ', viewName);
+			}
+		});
 
+		return View1;
+	
+	}
 
-	return View1;
-
-});
+);

@@ -1,9 +1,19 @@
 /* Bootstrap the app once DOM is ready */
 
+
 require.config({
-	urlArgs: window.requireCacheBust,
+	
+	/* optimizer looks for nested dependencies (i.e ones loaded with require(['something'])) */
+	findNestedDependencies: true,
+	
 	paths: {
-        "text" : "components/text"
+        
+        "text": "../../bower_components/requirejs-text/text",
+        "jquery": "../../bower_components/jquery/dist/jquery",
+        "underscore": "../../bower_components/underscore/underscore",
+        "backbone": "../../bower_components/backbone/backbone"
+
+
         
     }
 
