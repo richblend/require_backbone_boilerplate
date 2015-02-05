@@ -1,6 +1,6 @@
 define([
-
-], function(){
+	'backbone'
+], function(Backbone){
 	
 	var Burrito = Backbone.Model.extend({
 

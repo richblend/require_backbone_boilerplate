@@ -27,7 +27,8 @@ define(
 					var view = new View();
 					view.addSubView(subview);
 					$('.container').html(view.$el);
-				})
+				});
+				
 			});
 
 			Backbone.history.start();

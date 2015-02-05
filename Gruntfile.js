@@ -206,6 +206,26 @@ module.exports = function(grunt) {
 					    ];
 					}
 				}
+		    },
+
+		    testServer:{
+		    	options: {
+					keepalive: true,
+					port: 9002,
+					base: './'
+				}
+		    }
+		},
+
+
+		open : {
+		    test: {
+		      path: 'http://0.0.0.0:9002/tests/SpecRunner.html',
+		      app: 'Google Chrome'
+		    },
+		    dist: {
+		      path: 'http://0.0.0.0:9001/',
+		      app: 'Google Chrome'
 		    }
 		}
 
@@ -224,6 +244,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-open');
 
 
 	/* available tasks :
@@ -277,7 +299,18 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('serve', [
-		'connect'
+		'open:dist',
+		'connect:server'
+		
+	]);
+
+	
+
+	grunt.registerTask('test', [
+		'run',
+		'open:test',
+		'connect:testServer'
+		
 	]);
 
 };
